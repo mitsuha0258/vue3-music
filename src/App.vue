@@ -4,10 +4,14 @@
         <SideBar></SideBar>
       </el-aside>
       <el-container style="height: 100vh">
-        <el-header height="60px" style="padding: 0">
+        <el-header height="70px" style="padding: 0">
           <Header></Header>
         </el-header>
-        <router-view></router-view>
+        <ElScrollbar>
+        <el-main>
+            <router-view></router-view>
+        </el-main>
+        </ElScrollbar>
         <el-footer height="80px">
           <Footer></Footer>
         </el-footer>

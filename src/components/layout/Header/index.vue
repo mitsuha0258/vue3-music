@@ -5,10 +5,11 @@
         <div style="margin-left: 15px">
           <Icon name="back" size="14" style="padding: 0 10px"></Icon>
           <Icon name="more" size="14" style="padding: 0 10px"></Icon>
-          <router-link to="/recommendation" class="menu-title">推荐</router-link>
-          <router-link to="/musichall" class="menu-title">音乐馆</router-link>
-          <router-link to="/video" class="menu-title">视频</router-link>
-          <router-link to="/dj" class="menu-title">电台</router-link>
+          <router-link :to="`/${title.key}`" class="menu-title"
+                       :class="{ 'active': curIndex === index }"
+            v-for="(title, index) in titles" :key="index" @click="change(index)"
+          >{{ title.name }}</router-link>
+
         </div>
 
       </el-col>
@@ -47,6 +48,18 @@ export default {
   data() {
     return {
       searchKey: '',
+      curIndex: -1,
+      titles: [
+        {name: '推荐', key: 'recommendation'},
+        {name: '音乐馆', key: 'musicHall'},
+        {name: '视频', key: 'video'},
+        {name: '电台', key: 'dj'},
+      ]
+    }
+  },
+  methods: {
+    change(index) {
+      this.curIndex = index;
     }
   }
 }
@@ -76,7 +89,12 @@ export default {
 
 .menu-title:hover {
   text-decoration: none;
-  color: rgb(52, 211, 153);
+  color: rgb(52, 211, 153) !important;
+}
+
+.active {
+  cursor: default;
+  color: rgb(52, 211, 153)
 }
 
 /deep/ .el-input{

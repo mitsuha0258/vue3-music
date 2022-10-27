@@ -1,22 +1,42 @@
 export default [
     {
         path: '/',
-        redirect: '/MusicHall'
+        redirect: '/musicHall'
     },
     {
-        path: '/Recommendation',
+        path: '/recommendation',
         component: () => import('@/views/Recommendation')
     },
     {
-        path: '/MusicHall',
-        component: () => import('@/views/MusicHall')
+        path: '/musicHall',
+        component: () => import('@/views/MusicHall'),
+        redirect: {name: 'picks'},
+        children: [
+            {
+                name: 'picks',
+                path: 'picks',
+                component: () => import('@/views/MusicHall/Picks')
+            },
+            {
+                path: 'playlistCategory',
+                component: () => import('@/views/MusicHall/PlaylistCategory')
+            },
+            {
+                path: 'rankList',
+                component: () => import('@/views/MusicHall/RankList')
+            },
+            {
+                path: 'singer',
+                component: () => import('@/views/MusicHall/Singer')
+            }
+        ]
     },
     {
-        path: '/Video',
+        path: '/video',
         component: () => import('@/views/Video')
     },
     {
-        path: '/Dj',
+        path: '/dj',
         component: () => import('@/views/Dj')
     }
 ]
