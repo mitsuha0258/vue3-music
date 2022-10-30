@@ -38,5 +38,9 @@ export default [
     {
         path: '/dj',
         component: () => import('@/views/Dj')
+    },
+    {
+        path: '/playlist',
+        component: () => import('@/views/Playlist')
     }
 ]

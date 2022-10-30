@@ -59,7 +59,7 @@ export default {
   position: relative;
   cursor: pointer;
   overflow: hidden;
-  border-radius: 0.5rem;
+  border-radius: 8px;
   transition-property: all;
   transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
   transition-duration: 150ms;
@@ -118,7 +118,6 @@ export default {
   }
 
   &:hover {
-    --tw-translate-y: -0.25rem;
     transform: translate(0, -0.25rem) rotate(0) skewX(0) skewY(0) scaleX(1) scaleY(1);
 
     .mask {

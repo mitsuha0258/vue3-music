@@ -1,0 +1,185 @@
+/*指定基调颜色*/
+:root {
+    --el-color-primary: #34d399 !important;
+    --el-color-primary-light-1: #065f46 !important;
+    --el-color-primary-light-2: #047857 !important;
+    --el-color-primary-light-3: #059669 !important;
+    --el-color-primary-light-4: #10b981 !important;
+    --el-color-primary-light-5: #34d399 !important;
+    --el-color-primary-light-6: #6ee7b7 !important;
+    --el-color-primary-light-7: #a7f3d0 !important;
+    --el-color-primary-light-8: #d1fae5 !important;
+    --el-color-primary-light-9: #ecfdf5 !important;
+    --el-color-primary-dark-2: #337ecc !important;
+    --text-color: rgb(51,65,85);
+}
+
+html, body {
+    font-family: "Helvetica Neue", Helvetica, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "微软雅黑", Arial, sans-serif;
+    background-color: rgb(255,255,255);
+    color: rgb(51,65,85);
+}
+
+/*当鼠标悬浮在文字或icon上时，变成主色*/
+.hover-color {
+    cursor: pointer;
+}
+.hover-color:hover {
+    color: rgb(52, 211, 153) !important;
+}
+
+/*制定文字大小*/
+.text-xs {
+    font-size: .75rem;
+    line-height: 1rem;
+}
+.text-sm {
+    font-size: .875rem;
+    line-height: 1.25rem;
+}
+.text-base {
+    font-size: 1rem;
+    line-height: 1.5rem;
+}
+.text-lg {
+    font-size: 1.125rem;
+    line-height: 1.75rem;
+}
+.text-xl {
+    font-size: 1.25rem;
+    line-height: 1.75rem;
+}
+.text-2xl {
+    font-size: 1.5rem;
+    line-height: 2rem;
+}
+
+.text-dc {
+    color: rgb(148,163,184)
+}
+
+/*文本截断，使用省略号代替*/
+.truncate {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+//字体粗细
+@for $i from 0 through 9 {
+    .font-weight-#{$i} {
+        font-weight: 100 * $i;
+    }
+}
+
+/*内外边距*/
+@for $i from 0 through 16 { // 取值范围是0~16,增量为4px
+    // 外边距
+    .mt-#{$i} {
+       margin-top: 4px * $i;
+    }
+    .mb-#{$i} {
+       margin-bottom: 4px * $i;
+    }
+    .ml-#{$i} {
+        margin-left: 4px * $i;
+    }
+    .mr-#{$i} {
+        margin-right: 4px * $i;
+    }
+    .mx-#{$i} {
+        margin-left: 4px * $i;
+        margin-right: 4px * $i;
+    }
+    .my-#{$i} {
+        margin-top: 4px * $i;
+        margin-bottom: 4px * $i;
+    }
+    .m-#{$i} {
+        margin: 4px * $i;
+    }
+
+
+    //内边距
+    .pt-#{$i} {
+        padding-top: 4px * $i;
+    }
+    .pb-#{$i} {
+        padding-bottom: 4px * $i;
+    }
+    .pl-#{$i} {
+        padding-left: 4px * $i;
+    }
+    .pr-#{$i} {
+        padding-right: 4px * $i;
+    }
+    .px-#{$i} {
+        padding-left: 4px * $i;
+        padding-right: 4px * $i;
+    }
+    .py-#{$i} {
+        padding-top: 4px * $i;
+        padding-bottom: 4px * $i;
+    }
+    .p-#{$i} {
+        padding: 4px * $i;
+    }
+}
+
+//圆角
+.rounded-sm {
+    border-radius: 8px;
+}
+.rounded {
+    border-radius: 10px;
+}
+.rounded-lg {
+    border-radius: 12px;
+}
+.rounded-xl {
+    border-radius: 14px;
+}
+.rounded-2xl {
+    border-radius: 16px;
+}
+
+
+.button {
+    display: flex;
+    height: 32px;
+    align-items: center;
+    justify-content: center;
+    border-radius: 9999px;
+    border-width: 0;
+    background-color: rgb(5,150,105);
+    font-size: 0.875rem;
+    line-height: 1.25rem;
+    transition-property: all;
+    transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+    transition-duration: 150ms;
+    color: rgb(255,255,255);
+    &:hover {
+        cursor: pointer;
+        background-color: rgb(4,120,87)
+    }
+}
+
+.button-outline {
+    display: flex;
+    height: 32px;
+    align-items: center;
+    justify-content: center;
+    border-radius: 9999px;
+    border: 1px solid #e5e7eb;
+    background-color: transparent;
+    font-size: 0.875rem;
+    line-height: 1.25rem;
+    transition-property: all;
+    transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+    transition-duration: 150ms;
+    &:hover {
+        cursor: pointer;
+        border-color: rgb(16,185,129);
+        color: rgb(16,185,129);
+    }
+}

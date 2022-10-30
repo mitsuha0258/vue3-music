@@ -110,13 +110,12 @@ export default {
 }
 
 .swiper {
-
   margin-left: -0.625rem;
   margin-right: -0.625rem;
 }
 
 .swiper .swiper-slide {
-  width: 303px;
+  width: 299px;
   padding-left: 0.625rem;
   padding-right: 0.625rem;
 }

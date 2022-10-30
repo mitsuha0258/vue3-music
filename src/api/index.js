@@ -13,3 +13,7 @@ export const reqGetPersonalizedDjProgram = () => requests({method: 'get', url: '
 export const reqGetPersonalizedMv = () => requests({method: 'get', url: '/personalized/mv'})
 
 export const reqGetTopListDetail = () => requests({method: 'get', url: '/toplist/detail'})
+
+export const reqGetPlaylistDetail = (id, s=8) => requests({method: 'get', url: '/playlist/detail', params:{id, s}})
+
+export const reqGetPlayListTrackAll = (id) => requests({method: 'get', url: '/playlist/track/all', params:{id}})

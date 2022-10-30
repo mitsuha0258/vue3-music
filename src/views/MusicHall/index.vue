@@ -1,7 +1,7 @@
 <template>
-  <div id="music-hall">
-    <el-affix target="#music-hall" :offset="56">
-      <div class="bg-view">
+  <div class="music">
+    <el-affix target=".music" :offset="60">
+      <div class="tab-box pt-2">
         <el-tabs v-model="curMenu" @tab-click="onTabClick">
           <el-tab-pane v-for="(menu, index) in menus" :key="index" :label="menu.name" :name="menu.key" class="text-main"/>
         </el-tabs>
@@ -56,11 +56,14 @@ export default {
 </script>
 
 <style scoped lang="scss">
-#music-hall {
+.music {
   height: 100%;
-  //padding-left: 25px;
-  //padding-right: 25px;
-  //padding-top: 20px;
+
+  .tab-box {
+    //height: 40px;
+    //width: inherit;
+    background-color: white;
+  }
 
   /deep/ .el-tabs__nav-wrap::after {
     height: 0;

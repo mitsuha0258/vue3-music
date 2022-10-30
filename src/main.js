@@ -9,6 +9,8 @@ import Icon from "@/components/common/Icon";
 //统一接口api文件夹里面全部请求函数
 import * as API from '@/api';
 
+import "@/assets/base.scss";
+
 const app = createApp(App);
 app.use(router);
 app.use(store);

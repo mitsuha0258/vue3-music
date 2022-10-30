@@ -10,21 +10,21 @@
               <span style="color: rgb(148 163 184); margin-left: 8px"> - {{ '帅到被人砍' }}</span>
             </div>
             <div style="display: flex; column-gap: 0.75rem;">
-              <Icon name="like" class="hover"></Icon>
-              <Icon name="Arrowdown" class="hover"></Icon>
-              <Icon name="more1" class="hover"></Icon>
-              <Icon name="comment" class="hover"></Icon>
+              <Icon name="like" class="hover-color"></Icon>
+              <Icon name="Arrowdown" class="hover-color"></Icon>
+              <Icon name="more1" class="hover-color"></Icon>
+              <Icon name="comment" class="hover-color"></Icon>
             </div>
           </div>
         </div>
       </el-col>
       <el-col :span="8">
         <div class="flex-controller">
-          <Icon name="sequence" size="18" class="hover"></Icon>
-          <Icon name="go-pre" size="35" class="hover"></Icon>
-          <Icon name="play" size="45" class="hover"></Icon>
-          <Icon name="go-next" size="35" class="hover"></Icon>
-          <Icon name="volume" size="25" class="hover"></Icon>
+          <Icon name="sequence" size="18" class="hover-color"></Icon>
+          <Icon name="go-pre" size="35" class="hover-color"></Icon>
+          <Icon name="play" size="45" class="hover-color"></Icon>
+          <Icon name="go-next" size="35" class="hover-color"></Icon>
+          <Icon name="volume" size="25" class="hover-color"></Icon>
         </div>
       </el-col>
       <el-col :span="8">
@@ -32,8 +32,8 @@
           <span>
             {{ '00:00 ' }} / {{ ' 00:00' }}
           </span>
-          <span class="hover" style="font-size: 15px;">词</span>
-          <span class="hover">
+          <span class="hover-color text-base">词</span>
+          <span class="hover-color">
             <Icon name="play-queue"></Icon>
             <span>{{ '0' }}</span>
           </span>
@@ -55,7 +55,8 @@ export default {
 }
 </script>
 
-<style scoped>
+<style scoped lang="scss">
+
 .cover {
   width: 44px;
   height: 44px;
@@ -69,13 +70,6 @@ export default {
   margin-left: 10px;
   font-size: 0.75rem;
   line-height: 1rem;
-}
-
-.hover {
-  cursor: pointer;
-}
-.hover:hover {
-  color: rgb(52 211 153);
 }
 
 .flex-controller {

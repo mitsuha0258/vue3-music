@@ -1,18 +1,18 @@
 <template>
-    <el-container style="height: 100vh; width: 100vw; overflow: hidden;">
-      <el-aside width="225px" style="height: 100vh">
+    <el-container class="app">
+      <el-aside width="200px">
         <SideBar></SideBar>
       </el-aside>
-      <el-container style="height: 100vh">
-        <el-header height="70px" style="padding: 0">
+      <el-container>
+        <el-header height="60px" class="header pl-9 pr-0">
           <Header></Header>
         </el-header>
         <ElScrollbar>
-        <el-main>
-            <router-view></router-view>
-        </el-main>
+          <el-main class="px-10 pt-0 el-main">
+              <router-view></router-view>
+          </el-main>
         </ElScrollbar>
-        <el-footer height="80px">
+        <el-footer height="65px" class="px-10">
           <Footer></Footer>
         </el-footer>
       </el-container>
@@ -34,12 +34,31 @@ export default {
 }
 </script>
 
-<style>
+<style lang="scss">
+/*隐藏默认scrollbar*/
 ::-webkit-scrollbar {
   width: 0 !important;
 }
 ::-webkit-scrollbar {
   width: 0 !important;height: 0;
+}
+
+.app {
+  height: 100vh;
+  width: 100vw;
+  overflow: hidden;
+
+  .side-bar{
+
+  }
+
+  .header {
+    border-bottom: rgb(243, 243, 243) 1px solid;
+  }
+
+  .el-main {
+    overflow: hidden;
+  }
 }
 
 
