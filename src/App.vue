@@ -30,6 +30,9 @@ export default {
   components: {
     ElAside, ElContainer, ElFooter, ElHeader,
     SideBar, Header, Footer
+  },
+  mounted() {
+
   }
 }
 </script>

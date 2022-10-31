@@ -79,7 +79,7 @@ export default {
   },
   methods: {
     play(id) {
-      alert(id);
+      this.$store.dispatch("play", id);
     }
   },
   mounted() {
