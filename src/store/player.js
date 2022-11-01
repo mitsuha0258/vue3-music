@@ -1,10 +1,49 @@
 import {reqGetSongUrl, reqGetSongDetail} from "@/api";
 
+const PQ = [
+    {
+        id: 0,
+        name: 'ssdfdvdf',
+        ar: [
+            {
+                name: 'fs'
+            }
+        ],
+        dt: 285160
+    },
+    {
+        id: 1,
+        name: '设计费',
+        ar: [
+            {
+                name: '123'
+            },
+            {
+                name: '123'
+            },
+            {
+                name: '123'
+            }
+        ],
+        dt: 285160
+    },
+    {
+        id: 3,
+        name: '多款进口奶粉v',
+        ar: [
+            {
+                name: '的说法是'
+            }
+        ],
+        dt: 285160
+    }
+]
+
 const state = {
     audio: new Audio(),  // 音频对象
     playMode: 0,  // 循环模式 0：单曲循环；1：列表循环；2：随机播放
     volume: 60,  // 音量
-    playQueue: [],  // 播放队列
+    playQueue: PQ,  // 播放队列
     id: 0,  // 歌曲id
     url: '', // 歌曲播放地址
     songUrl: {},  // 包括歌曲播放地址
@@ -15,7 +54,8 @@ const state = {
     ended: false,  // 是否播放结束
     muted: false,  // 是否静音
     curTime: 0,  // 当前播放时间
-    duration: 0,  // 总播放时间
+    duration: 100,  // 总播放时间
+
 };
 
 const mutations = {
@@ -118,9 +158,9 @@ const mutations = {
     },
 
     // 修改播放时间
-    setCurTime(curTime){
-        state.curTime = curTime;
-        state.audio.currentTime = curTime;
+    setCurTime(state, val){
+        state.curTime = val;
+        state.audio.currentTime = val;
         state.sliderInput = false;
     },
 
@@ -203,7 +243,7 @@ const getters = {
         return state.playQueue.findIndex(song => song.id === state.song.id)
     },
     nextSong() {
-        const {curIndex, playQueueNum} = this
+        const {curIndex, playQueueNum} = state
         if(curIndex === playQueueNum-1) {
             return state.playQueue.first();
         }
@@ -212,7 +252,7 @@ const getters = {
         }
     },
     preSong() {
-        const {curIndex} = this;
+        const {curIndex} = state;
         if (curIndex === 0) {
             return state.playQueue.last();
         }

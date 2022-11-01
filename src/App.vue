@@ -9,7 +9,7 @@
         </el-header>
         <ElScrollbar>
           <el-main class="px-10 pt-0 el-main">
-              <router-view></router-view>
+            <router-view></router-view>
           </el-main>
         </ElScrollbar>
         <el-footer height="65px" class="px-10">
@@ -17,6 +17,7 @@
         </el-footer>
       </el-container>
     </el-container>
+
 </template>
 
 <script>
@@ -32,6 +33,9 @@ export default {
     SideBar, Header, Footer
   },
   mounted() {
+
+  },
+  methods: {
 
   }
 }
