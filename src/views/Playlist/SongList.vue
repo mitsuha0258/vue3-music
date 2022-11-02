@@ -6,8 +6,9 @@
       <el-col :span="6">专辑</el-col>
       <el-col :span="1">时长</el-col>
     </el-row>
-    <SongListItem class="text-sm" :song="song" :index="`${index+1}`" show-ar-name show-al-name
-                    v-for="(song,index) in songList.slice(0,pageSize*page)" :key="song.id"></SongListItem>
+    <SongListItem class="text-sm" :class="{'playing': curSong.id===song.id}" :song="song" :index="`${index+1}`"
+                  show-ar-name show-al-name v-for="(song,index) in songList.slice(0,pageSize*page)" :key="song.id"
+    ></SongListItem>
     <div class="py-5" style="display: flex; justify-content: center" v-if="showMore">
       <el-link :underline="false" @click="loadMore" style="text-align: center; width: 80px;">加载更多</el-link>
     </div>
@@ -16,6 +17,7 @@
 
 <script>
 import SongListItem from "@/components/common/SongListItem";
+import {mapState} from "vuex";
 export default {
   name: "SongList",
   components: {SongListItem},
@@ -23,7 +25,8 @@ export default {
   data() {
     return {
       pageSize: 10,
-      page: 1
+      page: 1,
+      songId: 0,
     }
   },
   computed: {
@@ -35,15 +38,23 @@ export default {
         return false;
       }
     },
+    ...mapState({
+      curSong: state => state.player.song
+    })
   },
   methods: {
     loadMore() {
       this.page += 1;
+    },
+    changeId(id) {
+      this.songId = id;
     }
   }
 }
 </script>
 
 <style scoped>
-
+.playing {
+  background-color: rgb(245, 245, 245);
+}
 </style>

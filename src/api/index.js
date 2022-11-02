@@ -29,4 +29,4 @@ export const reqGetPlayListTrackAll = (id) => requests({method: 'get', url: '/pl
 export const reqGetSongUrl = (id) => requests({method:'get', url: '/song/url', params:{id}})
 
 // 获取歌曲详情 无url
-export const reqGetSongDetail = (id) => requests({method:'get', url: '/song/detail', params:{id}})
+export const reqGetSongDetail = (ids) => requests({method:'get', url: '/song/detail', params:{ids}})

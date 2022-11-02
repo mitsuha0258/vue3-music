@@ -1,49 +1,49 @@
 import {reqGetSongUrl, reqGetSongDetail} from "@/api";
 
-const PQ = [
-    {
-        id: 0,
-        name: 'ssdfdvdf',
-        ar: [
-            {
-                name: 'fs'
-            }
-        ],
-        dt: 285160
-    },
-    {
-        id: 1,
-        name: '设计费',
-        ar: [
-            {
-                name: '123'
-            },
-            {
-                name: '123'
-            },
-            {
-                name: '123'
-            }
-        ],
-        dt: 285160
-    },
-    {
-        id: 3,
-        name: '多款进口奶粉v',
-        ar: [
-            {
-                name: '的说法是'
-            }
-        ],
-        dt: 285160
-    }
-]
+// const PQ = [
+//     {
+//         id: 0,
+//         name: 'ssdfdvdf',
+//         ar: [
+//             {
+//                 name: 'fs'
+//             }
+//         ],
+//         dt: 285160
+//     },
+//     {
+//         id: 1,
+//         name: '设计费',
+//         ar: [
+//             {
+//                 name: '123'
+//             },
+//             {
+//                 name: '123'
+//             },
+//             {
+//                 name: '123'
+//             }
+//         ],
+//         dt: 285160
+//     },
+//     {
+//         id: 3,
+//         name: '多款进口奶粉v',
+//         ar: [
+//             {
+//                 name: '的说法是'
+//             }
+//         ],
+//         dt: 285160
+//     }
+// ]
 
 const state = {
     audio: new Audio(),  // 音频对象
-    playMode: 0,  // 循环模式 0：单曲循环；1：列表循环；2：随机播放
+    playMode: 1,  // 循环模式 0：单曲循环；1：列表循环；2：随机播放
     volume: 60,  // 音量
-    playQueue: PQ,  // 播放队列
+    playQueue: [],  // 播放队列
     id: 0,  // 歌曲id
     url: '', // 歌曲播放地址
     songUrl: {},  // 包括歌曲播放地址
@@ -55,6 +55,8 @@ const state = {
     muted: false,  // 是否静音
     curTime: 0,  // 当前播放时间
     duration: 100,  // 总播放时间
+
+    num: [1,2,3,4]
 
 };
 
@@ -75,7 +77,7 @@ const mutations = {
 
     setDuration(state, duration){state.duration=duration},
 
-    init() {
+    init(state) {
         state.audio.volume = state.volume / 100;
     },
 
@@ -86,14 +88,20 @@ const mutations = {
         }
         else {
             //TODO: 可以优化。1.没必要选择列表类型；
-            const len = state.playQueueNum;
+            const len = state.playQueue.length;
             playlist.forEach(song => {
-                if(state.playQueueNum === 0) {
+                if(state.playQueue.length === 0) {
                     state.playQueue.push(song);
                 }
                 else{
+                    let flag = 0;
                     for(let i = 0; i < len; i++){
-                        if(state.playQueue[i].id === song.id) break;
+                        if(state.playQueue[i].id === song.id) {
+                            flag = 1
+                            break;
+                        }
+                    }
+                    if(flag === 0) {
                         state.playQueue.push(song);
                     }
                 }
@@ -102,10 +110,8 @@ const mutations = {
     },
 
     // 清空播放队列
-    clearPlayQueue(){
+    clearPlayQueue(state){
         state.songUrl = {}
-        state.url = ''
-        state.id = 0;
         state.song = {}
         state.isPlaying = false;
         state.isPause = false;
@@ -114,7 +120,6 @@ const mutations = {
         state.muted = false;
         state.currentTime = 0;
         state.playQueue = [];
-        state.showPlayList = false;
         state.audio.load();
         setTimeout(() => {
             state.duration = 0;
@@ -122,7 +127,7 @@ const mutations = {
     },
 
     // 重新播放
-    rePlay() {
+    rePlay(state) {
         setTimeout(() => {
             state.currentTime = 0;
             state.audio.play();
@@ -130,7 +135,7 @@ const mutations = {
     },
 
     // 切换播放/暂停
-    togglePlay() {
+    togglePlay(state) {
         if(!state.song.id) return;
         if(state.isPlaying) {
             state.audio.pause();
@@ -142,7 +147,7 @@ const mutations = {
     },
 
     // 切换播放类型
-    togglePlayMode() {
+    togglePlayMode(state) {
         if(state.playMode === 2) {
             state.playMode = 0;
         }
@@ -152,7 +157,7 @@ const mutations = {
     },
 
     // 切换静音模式
-    toggleMuted() {
+    toggleMuted(state) {
         state.muted = !state.muted;
         state.audio.muted = state.muted;
     },
@@ -165,7 +170,7 @@ const mutations = {
     },
 
     // 定时器
-    interval() {
+    interval(state) {
         if(state.isPlaying && !state.sliderInput) {
             state.curTime = parseInt(state.audio.currentTime.toString());
             state.duration = parseInt(state.audio.duration.toString());
@@ -194,11 +199,13 @@ const actions = {
 
         // songs: [song]
         const {songs} = await reqGetSongDetail(id);
+        commit('setSong', songs[0])
         commit('addPlaylist', {replace:false, playlist:[songs[0]]})
     },
 
     // 随机播放
     randomPlay({dispatch}) {
+        // TODO: sample() 可能有问题  lodash包含这些函数
         dispatch('play', state.playQueue.sample().id)
     },
 
@@ -208,7 +215,7 @@ const actions = {
             commit('rePlay');
         }
         else if(state.playMode === 1) {
-            dispatch('play', getters.nextSong.id)
+            dispatch('play', getters.nextSong().id)
         }
         else if(state.playMode === 2) {
             dispatch('randomPlay')
@@ -217,11 +224,12 @@ const actions = {
 
     // 上一首
     goPrev({commit, dispatch}) {
+        console.log(getters.preSong())
         if(state.playMode === 0) {
             commit('rePlay');
         }
         else if(state.playMode === 1) {
-            dispatch('play', getters.preSong.id)
+            dispatch('play', getters.preSong().id)
         }
         else if(state.playMode === 2) {
             dispatch('randomPlay')
@@ -236,25 +244,22 @@ const actions = {
 }
 
 const getters = {
-    playQueueNum() {
-        return state.playQueue.length;
-    },
     curIndex() {
         return state.playQueue.findIndex(song => song.id === state.song.id)
     },
     nextSong() {
-        const {curIndex, playQueueNum} = state
-        if(curIndex === playQueueNum-1) {
-            return state.playQueue.first();
+        const curIndex = getters.curIndex();
+        if(curIndex === state.playQueue.length-1) {
+            return state.playQueue[0];
         }
         else {
             return  state.playQueue[curIndex+1];
         }
     },
     preSong() {
-        const {curIndex} = state;
+        const curIndex = getters.curIndex();
         if (curIndex === 0) {
-            return state.playQueue.last();
+            return state.playQueue[state.playQueue.length-1];
         }
         else {
             return state.playQueue[curIndex-1];

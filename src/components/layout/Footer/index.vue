@@ -9,11 +9,22 @@
       <el-row justify="space-between" style="height: 100%; align-items: center;">
         <el-col :span="8">
           <div style="display: flex">
-            <img src="./imgs/OpticalDisk.png" class="cover" alt="">
+            <span v-if="JSON.stringify(curSong)==='{}'">
+              <img src="./imgs/OpticalDisk.png" class="cover" alt="">
+            </span>
+            <span v-else>
+              <img :src="curSong.al?.picUrl" class="cover" alt="">
+            </span>
             <div class="flex-col">
               <div style="display: flex">
-                <span>{{ '开源云音乐' }}</span>
-                <span style="color: rgb(148 163 184); margin-left: 8px"> - {{ '帅到被人砍' }}</span>
+                <span v-if="JSON.stringify(curSong)==='{}'">
+                  <span>{{ '开源云音乐' }}</span>
+                  <span style="color: rgb(148 163 184);"> - {{ '帅到被人砍' }}</span>
+                </span>
+                <span v-else>
+                  <span>{{ curSong.name }}</span>
+                  <span style="color: rgb(148 163 184);"> - {{ curSong.ar[0].name }}</span>
+                </span>
               </div>
               <div style="display: flex; column-gap: 0.75rem;">
                 <Icon name="like" class="hover-color"></Icon>
@@ -27,22 +38,27 @@
         <el-col :span="8">
           <div class="flex-controller">
             <Icon name="sequence" size="18" class="hover-color"></Icon>
-            <Icon name="go-pre" size="35" class="hover-color"></Icon>
-            <Icon name="play" size="45" class="hover-color"></Icon>
-            <Icon name="go-next" size="35" class="hover-color"></Icon>
+            <Icon name="go-pre" size="35" class="hover-color" @click="goPrev"></Icon>
+            <Icon name="play" size="45" class="hover-color"
+                  v-if="!isPlaying"  @click="togglePlay"></Icon>
+            <Icon name="stop" size="45" class="hover-color"
+                  v-else @click="togglePlay"></Icon>
+            <Icon name="go-next" size="35" class="hover-color" @click="goNext"></Icon>
             <Icon name="volume" size="25" class="hover-color"></Icon>
           </div>
         </el-col>
         <el-col :span="8">
           <div class="flex-action">
-          <span>
-            {{ '00:00 ' }} / {{ ' 00:00' }}
-          </span>
-            <span class="hover-color text-base">词</span>
-            <span class="hover-color">
-            <Icon name="play-queue" @click="moveOut"></Icon>
-            <span>{{ '0' }}</span>
-          </span>
+            <span>
+              {{ '00:00 ' }} / {{ ' 00:00' }}
+            </span>
+            <span>
+              <span class="hover-color text-base mr-2">词</span>
+              <span class="hover-color" @click="moveOut">
+                <Icon name="play-queue"></Icon>
+                <span>{{ playQueue.length }}</span>
+              </span>
+            </span>
           </div>
         </el-col>
       </el-row>
@@ -55,7 +71,7 @@
 
 <script>
 import Icon from "@/components/common/Icon";
-import {mapState, } from 'vuex';
+import {mapState} from 'vuex';
 
 export default {
   name: "Footer",
@@ -64,8 +80,11 @@ export default {
   },
   computed: {
     ...mapState({
-      duration: state => state.player.duration
-    })
+      duration: state => state.player.duration,
+      playQueue: state => state.player.playQueue,
+      curSong: state => state.player.song,
+      isPlaying: state => state.player.isPlaying
+    }),
   },
   data() {
     return {
@@ -78,10 +97,19 @@ export default {
     },
     moveOut() {
       this.$refs.playQueue.isShowPlayQueue = true
+    },
+    togglePlay() {
+      this.$store.commit("togglePlay")
+    },
+    goNext() {
+      this.$store.dispatch("goNext")
+    },
+    goPrev() {
+      this.$store.dispatch("goPrev")
     }
   },
   mounted() {
-
+    // console.log(this.playQueueNum)
   }
 }
 </script>
