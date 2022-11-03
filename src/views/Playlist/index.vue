@@ -1,7 +1,7 @@
 <template>
   <div class="playlist">
     <div class="pt-5" v-if="playlist">
-      <PlaylistInfo :playlist="playlist" @play-all="playAll"></PlaylistInfo>
+      <PlaylistInfo :playlist="playlist" @playAll="playAll"></PlaylistInfo>
       <el-tabs class="mt-3" v-model="tab">
         <el-tab-pane lazy :label="`歌曲 ${songList.length}`" name="tracks">
           <SongList :song-list="songList"/>
@@ -41,7 +41,8 @@ export default {
       this.songList = songs;
     },
     playAll() {
-      alert(1);
+      this.$store.commit('addPlaylist',{replace:true, playlist:this.songList})
+      this.$store.dispatch('play', this.songList[0].id)
     }
   },
   mounted() {

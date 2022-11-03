@@ -50,7 +50,7 @@
         <el-col :span="8">
           <div class="flex-action">
             <span>
-              {{ '00:00 ' }} / {{ ' 00:00' }}
+              {{ formatDuring(currentTime) }} / {{ formatDuring(duration) }}
             </span>
             <span>
               <span class="hover-color text-base mr-2">词</span>
@@ -71,6 +71,7 @@
 
 <script>
 import Icon from "@/components/common/Icon";
+import {useFormatDuring} from "@/utils/number";
 import {mapState} from 'vuex';
 
 export default {
@@ -83,17 +84,27 @@ export default {
       duration: state => state.player.duration,
       playQueue: state => state.player.playQueue,
       curSong: state => state.player.song,
-      isPlaying: state => state.player.isPlaying
+      isPlaying: state => state.player.isPlaying,
+      currentTime: state => state.player.curTime,
+      ended: state => state.player.ended,
     }),
+    curTime: {
+      set: function (val) {
+        this.$store.commit('setCurTime', val)
+      },
+      get: function () {
+        return this.currentTime
+      }
+    }
   },
   data() {
     return {
-      curTime: 0
+      timer: null
     }
   },
   methods: {
     setCurTime(val) {
-      this.$store.commit('setCurTime', val);
+      this.$store.commit('onSliderChange', val);
     },
     moveOut() {
       this.$refs.playQueue.isShowPlayQueue = true
@@ -106,10 +117,29 @@ export default {
     },
     goPrev() {
       this.$store.dispatch("goPrev")
+    },
+    formatDuring(val) {
+      return useFormatDuring(val);
     }
   },
   mounted() {
-    // console.log(this.playQueueNum)
+    const self = this;
+    console.log("start")
+    this.timer = setInterval(()=>{
+      self.$store.commit('interval')
+    }, 1000)
+  },
+  unmounted() {
+    console.log("clear")
+    clearInterval(this.timer)
+  },
+  watch: {
+    ended(newVal){
+      if(newVal) {
+        this.$store.dispatch("playEnd")
+      }
+
+    }
   }
 }
 </script>

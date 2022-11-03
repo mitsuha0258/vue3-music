@@ -21,7 +21,19 @@
                   @click="togglePlay" v-else></Icon>
           </span>
 
-          <Icon title="添加到" name="add" class="hover-color"></Icon>
+          <el-popover placement="right" trigger="click"  :width="100">
+            <template #reference>
+              <Icon title="添加到" name="add" class="hover-color"></Icon>
+            </template>
+            <div class="popover">
+              <div class="popover-item" @click="addSong(song)">
+                <span><Icon name="play-queue" class="mx-3"></Icon></span>
+                <span>播放列表</span>
+              </div>
+            </div>
+          </el-popover>
+
+
           <Icon title="下载" name="download1" class="hover-color"></Icon>
           <Icon title="更多操作" name="more1" class="hover-color"></Icon>
         </div>
@@ -94,10 +106,14 @@ export default {
   methods: {
     play(id) {
       this.$store.dispatch("play", id);
+      this.$emit('addPlaylist')
     },
     togglePlay() {
       this.$store.commit("togglePlay");
     },
+    addSong(song) {
+      this.$store.commit('addPlaylist', {replace:false,playlist:[song]})
+    }
   },
   mounted() {
 
@@ -106,6 +122,22 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.popover {
+  display: flex;
+  flex-direction: column;
+  padding: 5px;
+
+  .popover-item {
+    display: flex;
+    align-items: center;
+
+    cursor: pointer;
+    padding: 5px;
+    &:hover {
+      background-color: rgba(52,211,153,0.03);
+    }
+  }
+}
 
 .row {
   padding: 10px 20px 10px 8px;

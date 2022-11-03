@@ -13,6 +13,10 @@
     --el-color-primary-dark-2: #337ecc !important;
     --text-color: rgb(51,65,85);
     --el-dialog-padding-primary: 0 !important;
+
+    .el-popover {
+        --el-popover-padding: 0 !important
+    }
 }
 
 html, body {

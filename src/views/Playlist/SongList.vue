@@ -8,6 +8,7 @@
     </el-row>
     <SongListItem class="text-sm" :class="{'playing': curSong.id===song.id}" :song="song" :index="`${index+1}`"
                   show-ar-name show-al-name v-for="(song,index) in songList.slice(0,pageSize*page)" :key="song.id"
+                  @addPlaylist="addPlaylist"
     ></SongListItem>
     <div class="py-5" style="display: flex; justify-content: center" v-if="showMore">
       <el-link :underline="false" @click="loadMore" style="text-align: center; width: 80px;">加载更多</el-link>
@@ -46,8 +47,8 @@ export default {
     loadMore() {
       this.page += 1;
     },
-    changeId(id) {
-      this.songId = id;
+    addPlaylist() {
+      this.$store.commit("addPlaylist", {replace:true, playlist:this.songList})
     }
   }
 }

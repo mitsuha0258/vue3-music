@@ -75,6 +75,7 @@ const mutations = {
     setEnded(state, ended){state.ended=ended},
     setMuted(state, muted){state.muted=muted},
 
+    setCurTime(state, curTime){state.curTime=curTime},
     setDuration(state, duration){state.duration=duration},
 
     init(state) {
@@ -163,10 +164,15 @@ const mutations = {
     },
 
     // 修改播放时间
-    setCurTime(state, val){
+    onSliderChange(state, val){
         state.curTime = val;
         state.audio.currentTime = val;
         state.sliderInput = false;
+    },
+
+    // 播放时间拖动中
+    onSliderInput(state) {
+        state.sliderInput = true
     },
 
     // 定时器
@@ -177,8 +183,6 @@ const mutations = {
             state.ended = state.audio.ended;
         }
     }
-
-
 };
 
 const actions = {
@@ -211,6 +215,8 @@ const actions = {
 
     // 下一首
     goNext({commit, dispatch}) {
+        // TODO: 只完成顺序播放，其他还有问题
+        if(state.playQueue.length===0) return
         if(state.playMode === 0) {
             commit('rePlay');
         }
@@ -224,7 +230,7 @@ const actions = {
 
     // 上一首
     goPrev({commit, dispatch}) {
-        console.log(getters.preSong())
+        if(state.playQueue.length===0) return
         if(state.playMode === 0) {
             commit('rePlay');
         }
